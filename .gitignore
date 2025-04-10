@@ -3,3 +3,4 @@ python_server.pem
 *.pem
 .DS_Store
 .vscode
+.mypy_cache
