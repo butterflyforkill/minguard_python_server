@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 import uvicorn
+from .slack.routes import slack_router
 
 version = "v1"
 description = "MindGuard Python Server"
 title = "MindGuard Python Server"
-version_prefix = "/api/{version}"
+version_prefix = ""
 
 
 app = FastAPI(
@@ -13,6 +14,12 @@ app = FastAPI(
     version=version,
     docs_url=f"{version_prefix}/docs",
     redoc_url=f"{version_prefix}/redoc",
+)
+
+app.include_router(
+    slack_router,
+    prefix = "/slack",
+    tags=["slack"]
 )
 
 @app.get("/hello")
