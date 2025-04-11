@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
-from .slack.routes import slack_router
+from .webhook.routes import web_hook_router
 
 version = "v1"
 description = "MindGuard Python Server"
@@ -17,7 +17,7 @@ app = FastAPI(
 )
 
 app.include_router(
-    slack_router,
+    web_hook_router,
     prefix = "/slack",
     tags=["slack"]
 )
