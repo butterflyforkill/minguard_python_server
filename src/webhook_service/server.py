@@ -1,26 +1,15 @@
 from fastapi import FastAPI
 import uvicorn
-from .webhook.routes import web_hook_router
-
-version = "v1"
-description = "MindGuard Python Server"
-title = "MindGuard Python Server"
-version_prefix = ""
+from .webhook_service.google_calendar.routes import gcal_web_hook_router
+from .webhook_service.slack.routes import slack_web_hook_router
 
 
-app = FastAPI(
-    title=title,
-    description=description,
-    version=version,
-    docs_url=f"{version_prefix}/docs",
-    redoc_url=f"{version_prefix}/redoc",
-)
+app = FastAPI(title="MindGuard Webhook Service")
 
-app.include_router(
-    web_hook_router,
-    prefix = "/slack",
-    tags=["slack"]
-)
+# Include routers
+app.include_router(slack_web_hook_router, tags=["Slack"])
+app.include_router(gcal_web_hook_router, tags=["Google Calendar"])
+
 
 @app.get("/hello")
 async def hello_world():
